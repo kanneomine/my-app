@@ -57,10 +57,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`border-2 border-dashed rounded-3xl p-8 sm:p-12 text-center transition cursor-pointer flex flex-col items-center justify-center gap-4 bg-white shadow-xs ${
+        className={`border-2 border-dashed rounded-3xl p-8 sm:p-12 text-center transition cursor-pointer flex flex-col items-center justify-center gap-4 bg-zinc-900 shadow-2xl ${
           isDragging
-            ? 'border-indigo-500 bg-indigo-50/50 scale-[1.01]'
-            : 'border-stone-300 hover:border-stone-400 hover:bg-stone-50/50'
+            ? 'border-amber-500 bg-amber-500/10 scale-[1.01]'
+            : 'border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900/60'
         }`}
       >
         <input
@@ -71,24 +71,24 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           className="hidden"
         />
 
-        <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shadow-md border border-amber-500/20">
           <Upload className="w-8 h-8" />
         </div>
 
         <div>
-          <h3 className="text-base sm:text-lg font-bold text-stone-900">
+          <h3 className="text-base sm:text-lg font-bold text-zinc-100">
             修正したい画像をドラッグ＆ドロップ
           </h3>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
             またはクリックしてファイルを選択 (PNG, JPG, WebP 対応)
           </p>
         </div>
 
         <button
           type="button"
-          className="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs sm:text-sm font-bold transition shadow-xs flex items-center gap-2 mt-2"
+          className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-xl text-xs sm:text-sm font-bold transition shadow-md flex items-center gap-2 mt-2 border border-zinc-700"
         >
-          <FolderPlus className="w-4 h-4" />
+          <FolderPlus className="w-4 h-4 text-amber-500" />
           <span>パソコンから画像を選択</span>
         </button>
       </div>
@@ -97,16 +97,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           onClick={onOpenSamples}
-          className="p-5 rounded-2xl bg-white border border-stone-200 hover:border-indigo-300 hover:shadow-md transition text-left flex items-start gap-4 cursor-pointer group"
+          className="p-5 rounded-2xl bg-zinc-900 border border-zinc-850 hover:border-amber-500/30 hover:shadow-lg transition text-left flex items-start gap-4 cursor-pointer group"
         >
-          <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
             <ImageIcon className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-stone-900 group-hover:text-indigo-600 transition">
+            <h4 className="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition">
               サンプル画像でお試し
             </h4>
-            <p className="text-xs text-stone-500 mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               風景・インテリア・カフェ・ペットなどのサンプル画像ですぐに部分修正を体験
             </p>
           </div>
@@ -114,16 +114,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
         <button
           onClick={onOpenAIGenerator}
-          className="p-5 rounded-2xl bg-white border border-stone-200 hover:border-indigo-300 hover:shadow-md transition text-left flex items-start gap-4 cursor-pointer group"
+          className="p-5 rounded-2xl bg-zinc-900 border border-zinc-850 hover:border-amber-500/30 hover:shadow-lg transition text-left flex items-start gap-4 cursor-pointer group"
         >
-          <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-stone-900 group-hover:text-indigo-600 transition">
+            <h4 className="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition">
               Gemini AI で新規画像を生成
             </h4>
-            <p className="text-xs text-stone-500 mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               テキストから新しい元画像を生成して、その一部をさらに修正・編集
             </p>
           </div>

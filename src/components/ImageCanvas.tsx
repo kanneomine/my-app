@@ -445,17 +445,17 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
   };
 
   return (
-    <div className="flex flex-col bg-stone-900 rounded-2xl overflow-hidden border border-stone-800 shadow-xl">
+    <div className="flex flex-col bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
       {/* Top Toolbar */}
-      <div className="bg-stone-950 px-4 py-3 border-b border-stone-800 flex flex-wrap items-center justify-between gap-3 text-stone-300">
+      <div className="bg-zinc-950 px-4 py-3 border-b border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 text-zinc-300">
         {/* Tool selector buttons */}
-        <div className="flex items-center gap-1.5 bg-stone-900 p-1 rounded-xl border border-stone-800">
+        <div className="flex items-center gap-1.5 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
           <button
             onClick={() => setTool('brush')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
               tool === 'brush'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
+                ? 'bg-amber-500 text-zinc-950 shadow-md'
+                : 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200'
             }`}
             title="塗りつぶしブラシ (部分選択)"
           >
@@ -465,10 +465,10 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
 
           <button
             onClick={() => setTool('eraser')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
               tool === 'eraser'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
+                ? 'bg-amber-500 text-zinc-950 shadow-md'
+                : 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200'
             }`}
             title="マスクを消去"
           >
@@ -478,10 +478,10 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
 
           <button
             onClick={() => setTool('rect')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
               tool === 'rect'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
+                ? 'bg-amber-500 text-zinc-950 shadow-md'
+                : 'hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200'
             }`}
             title="四角形選択"
           >
@@ -491,17 +491,17 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
         </div>
 
         {/* Brush Size Slider */}
-        <div className="flex items-center gap-2 bg-stone-900 px-3 py-1.5 rounded-xl border border-stone-800">
-          <span className="text-xs text-stone-400 font-medium">サイズ</span>
+        <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-xl border border-zinc-800">
+          <span className="text-xs text-zinc-400 font-medium">サイズ</span>
           <input
             type="range"
             min="5"
             max="120"
             value={brushSize}
             onChange={(e) => setBrushSize(Number(e.target.value))}
-            className="w-24 sm:w-28 accent-indigo-500 cursor-pointer"
+            className="w-24 sm:w-28 accent-amber-500 cursor-pointer"
           />
-          <span className="text-xs text-stone-300 min-w-[2.5rem] font-mono text-right">
+          <span className="text-xs text-zinc-300 min-w-[2.5rem] font-mono text-right">
             {brushSize}px
           </span>
         </div>
@@ -511,7 +511,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
           <button
             onClick={handleUndo}
             disabled={!canUndo}
-            className="p-2 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 disabled:opacity-40 disabled:hover:bg-stone-900 transition cursor-pointer"
+            className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 disabled:opacity-40 disabled:hover:bg-zinc-900 transition cursor-pointer border border-zinc-800"
             title="元に戻す (Undo)"
           >
             <Undo2 className="w-4 h-4" />
@@ -520,7 +520,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
           <button
             onClick={handleRedo}
             disabled={!canRedo}
-            className="p-2 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 disabled:opacity-40 disabled:hover:bg-stone-900 transition cursor-pointer"
+            className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 disabled:opacity-40 disabled:hover:bg-zinc-900 transition cursor-pointer border border-zinc-800"
             title="やり直す (Redo)"
           >
             <Redo2 className="w-4 h-4" />
@@ -528,10 +528,10 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
 
           <button
             onClick={() => setShowMaskOverlay(!showMaskOverlay)}
-            className={`p-2 rounded-lg transition cursor-pointer ${
+            className={`p-2 rounded-lg transition cursor-pointer border border-zinc-800 ${
               showMaskOverlay
-                ? 'bg-stone-800 text-red-400'
-                : 'bg-stone-900 text-stone-500 hover:text-stone-300'
+                ? 'bg-zinc-800 text-amber-500'
+                : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
             }`}
             title={showMaskOverlay ? 'マスクを非表示' : 'マスクを表示'}
           >
@@ -539,25 +539,25 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
           </button>
 
           {/* Smart Selection Quick Buttons */}
-          <div className="hidden sm:flex items-center gap-1 bg-stone-900 p-0.5 rounded-lg border border-stone-800 text-[11px]">
-            <span className="text-stone-500 px-1.5">範囲:</span>
+          <div className="hidden sm:flex items-center gap-1 bg-zinc-900 p-0.5 rounded-lg border border-zinc-800 text-[11px]">
+            <span className="text-zinc-500 px-1.5">範囲:</span>
             <button
               onClick={() => handleSmartPreset('center')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
+              className="px-2 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition cursor-pointer"
               title="中央の被写体を概算選択"
             >
               中央被写体
             </button>
             <button
               onClick={() => handleSmartPreset('bg')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
+              className="px-2 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition cursor-pointer"
               title="背景全体を選択"
             >
               背景全体
             </button>
             <button
               onClick={() => handleSmartPreset('all')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
+              className="px-2 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition cursor-pointer"
               title="画像全体（ライティング・画質調整用）"
             >
               全選択
@@ -567,7 +567,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
           <button
             onClick={() => handleExpandMask(3)}
             disabled={!hasMask}
-            className="px-2 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-medium transition cursor-pointer border border-stone-800 disabled:opacity-40"
+            className="px-2 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium transition cursor-pointer border border-zinc-800 disabled:opacity-40"
             title="選択範囲を少し広げる"
           >
             + 拡大
@@ -591,7 +591,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
         onMouseMove={handlePointerMove}
         onMouseLeave={() => setMousePos(null)}
       >
-        <div className="relative shadow-2xl rounded-lg overflow-hidden border border-stone-800 group inline-block">
+        <div className="relative shadow-2xl rounded-lg overflow-hidden border border-zinc-850 group inline-block">
           {/* Base Image */}
           <img
             ref={imageRef}
@@ -631,15 +631,15 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
 
           {/* Loading Overlay Spinner */}
           {isLoading && (
-            <div className="absolute inset-0 bg-stone-950/80 backdrop-blur-xs flex flex-col items-center justify-center gap-3 text-white z-20 animate-fade-in">
+            <div className="absolute inset-0 bg-zinc-950/90 backdrop-blur-xs flex flex-col items-center justify-center gap-3 text-white z-20 animate-fade-in">
               <div className="relative">
-                <div className="w-12 h-12 rounded-full border-4 border-indigo-500/30 border-t-indigo-500 animate-spin" />
-                <Sparkles className="w-5 h-5 text-indigo-400 absolute inset-0 m-auto animate-pulse" />
+                <div className="w-12 h-12 rounded-full border-4 border-amber-500/30 border-t-amber-500 animate-spin" />
+                <Sparkles className="w-5 h-5 text-amber-400 absolute inset-0 m-auto animate-pulse" />
               </div>
-              <p className="text-sm font-semibold tracking-wide text-indigo-200">
+              <p className="text-sm font-semibold tracking-wide text-amber-200">
                 Gemini AI が部分画像修正中...
               </p>
-              <p className="text-xs text-stone-400">
+              <p className="text-xs text-zinc-400">
                 指定エリアを正確に認識して背景となじませています
               </p>
             </div>
@@ -648,7 +648,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
       </div>
 
       {/* Bottom status bar */}
-      <div className="bg-stone-950 px-4 py-2 text-xs text-stone-400 border-t border-stone-800 flex items-center justify-between">
+      <div className="bg-zinc-950 px-4 py-2 text-xs text-zinc-400 border-t border-zinc-800 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span
             className={`w-2 h-2 rounded-full ${

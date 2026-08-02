@@ -104,13 +104,28 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
         if (!maskCtx) return;
         maskCtx.drawImage(maskImg, 0, 0, w, h);
         const maskData = maskCtx.getImageData(0, 0, w, h);
+        const mPix = maskData.data;
+
+        // Check if there are any active (non-black) mask pixels
+        let hasActiveMask = false;
+        for (let i = 0; i < mPix.length; i += 4) {
+          if (mPix[i] > 30 || mPix[i + 1] > 30 || mPix[i + 2] > 30) {
+            hasActiveMask = true;
+            break;
+          }
+        }
+
+        if (!hasActiveMask) {
+          // If no active mask is drawn, bypass blending and directly use full AI result
+          setCompositeResultUrl(resultImage);
+          return;
+        }
 
         // Blend: Where mask is white (>30), use result pixel. Where mask is black, keep original pixel 100%.
         const blended = ctx.createImageData(w, h);
         const bPix = blended.data;
         const oPix = origData.data;
         const rPix = resData.data;
-        const mPix = maskData.data;
 
         for (let i = 0; i < bPix.length; i += 4) {
           const isMasked = mPix[i] > 30 || mPix[i + 1] > 30 || mPix[i + 2] > 30;
@@ -170,27 +185,27 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm flex flex-col gap-4">
+    <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-5 shadow-lg flex flex-col gap-4">
       {/* Top Header & View Mode Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
         <div>
-          <h2 className="text-base font-bold text-stone-900 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-indigo-600" />
+          <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-550" />
             AI 修正完了結果
           </h2>
-          <p className="text-xs text-stone-500 mt-0.5 max-w-md truncate" title={promptUsed}>
+          <p className="text-xs text-zinc-400 mt-0.5 max-w-md truncate" title={promptUsed}>
             指示: "{promptUsed}"
           </p>
         </div>
 
         {/* View Mode Switcher */}
-        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+        <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800">
           <button
             onClick={() => setViewMode('slider')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
               viewMode === 'slider'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-stone-600 hover:text-stone-900'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
             <Split className="w-3.5 h-3.5" />
@@ -201,8 +216,8 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
             onClick={() => setViewMode('sideBySide')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
               viewMode === 'sideBySide'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-stone-600 hover:text-stone-900'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
             <Columns className="w-3.5 h-3.5" />
@@ -213,8 +228,8 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
             onClick={() => setViewMode('resultOnly')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
               viewMode === 'resultOnly'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-stone-600 hover:text-stone-900'
+                ? 'bg-amber-500 text-zinc-950 font-bold shadow-md'
+                : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
             <Maximize2 className="w-3.5 h-3.5" />
@@ -225,9 +240,9 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
 
       {/* Strict Pixel Protection Status & Toggle */}
       {maskImage && (
-        <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-3.5 py-2 text-xs text-emerald-900">
+        <div className="flex items-center justify-between bg-emerald-950/40 border border-emerald-900/50 rounded-xl px-3.5 py-2 text-xs text-emerald-300">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
             <span>
               <strong>未選択領域100%完全保護:</strong> 未選択部分のオリジナルピクセルを厳密に完全合成保持中
             </span>
@@ -235,7 +250,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
           <button
             type="button"
             onClick={() => setUseStrictMaskProtection(!useStrictMaskProtection)}
-            className="text-[11px] font-bold underline cursor-pointer text-emerald-800 hover:text-emerald-950"
+            className="text-[11px] font-bold underline cursor-pointer text-emerald-405 hover:text-emerald-200"
           >
             {useStrictMaskProtection ? '元ピクセル合成ON' : '全域AI出力適用'}
           </button>
@@ -244,7 +259,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
 
       {/* Main View Display */}
       {viewMode === 'slider' && (
-        <div className="relative w-full overflow-hidden rounded-xl border border-stone-200 bg-stone-900 select-none aspect-square max-h-[500px]">
+        <div className="relative w-full overflow-hidden rounded-xl border border-zinc-850 bg-zinc-950 select-none aspect-square max-h-[500px]">
           {/* Base Original Image */}
           <img
             src={originalImage}
@@ -275,7 +290,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
             className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-2xl z-10 flex items-center justify-center"
             style={{ left: `${sliderPos}%` }}
           >
-            <div className="w-8 h-8 rounded-full bg-white text-stone-800 shadow-lg border border-stone-300 flex items-center justify-center text-xs font-black">
+            <div className="w-8 h-8 rounded-full bg-amber-500 text-zinc-950 shadow-lg border border-amber-600 flex items-center justify-center text-xs font-black">
               ↔
             </div>
           </div>
@@ -291,10 +306,10 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
           />
 
           {/* Labels */}
-          <span className="absolute bottom-3 left-3 bg-stone-900/80 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded-md border border-white/20 font-medium">
+          <span className="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-xs text-zinc-100 text-xs px-2.5 py-1 rounded-md border border-zinc-800 font-medium">
             ✨ AI 修正後
           </span>
-          <span className="absolute bottom-3 right-3 bg-stone-900/80 backdrop-blur-xs text-white text-xs px-2.5 py-1 rounded-md border border-white/20 font-medium">
+          <span className="absolute bottom-3 right-3 bg-zinc-950/80 backdrop-blur-xs text-zinc-100 text-xs px-2.5 py-1 rounded-md border border-zinc-800 font-medium">
             元の画像
           </span>
         </div>
@@ -303,10 +318,10 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
       {viewMode === 'sideBySide' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
               修正前（元画像）
             </span>
-            <div className="rounded-xl border border-stone-200 overflow-hidden bg-stone-900 aspect-square flex items-center justify-center">
+            <div className="rounded-xl border border-zinc-800 overflow-hidden bg-zinc-950 aspect-square flex items-center justify-center">
               <img
                 src={originalImage}
                 alt="Before"
@@ -317,11 +332,11 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
           </div>
 
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5" />
               修正後（Gemini AI 生成 + 未選択完全保護）
             </span>
-            <div className="rounded-xl border border-indigo-200 overflow-hidden bg-stone-900 aspect-square flex items-center justify-center shadow-xs">
+            <div className="rounded-xl border border-zinc-800 overflow-hidden bg-zinc-950 aspect-square flex items-center justify-center shadow-md">
               <img
                 src={finalDisplayImage}
                 alt="After"
@@ -334,7 +349,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
       )}
 
       {viewMode === 'resultOnly' && (
-        <div className="rounded-xl border border-stone-200 overflow-hidden bg-stone-900 aspect-square max-h-[500px] flex items-center justify-center">
+        <div className="rounded-xl border border-zinc-800 overflow-hidden bg-zinc-950 aspect-square max-h-[500px] flex items-center justify-center">
           <img
             src={finalDisplayImage}
             alt="AI Result Only"
@@ -345,14 +360,14 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-stone-100">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-zinc-800">
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={handleApply}
             className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition cursor-pointer ${
               isApplied
-                ? 'bg-emerald-600 text-white'
-                : 'bg-stone-900 hover:bg-stone-800 text-white shadow-sm'
+                ? 'bg-emerald-650 text-white'
+                : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-100 shadow-sm border border-zinc-700/60'
             }`}
           >
             {isApplied ? <Check className="w-4 h-4" /> : <RefreshCcw className="w-4 h-4" />}
@@ -363,11 +378,11 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
             onClick={() => setShowMetadataPanel(!showMetadataPanel)}
             className={`px-3.5 py-2.5 rounded-xl border transition text-xs sm:text-sm font-bold flex items-center gap-1.5 cursor-pointer ${
               showMetadataPanel
-                ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
-                : 'border-stone-200 hover:bg-stone-50 text-stone-700'
+                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                : 'border-zinc-800 hover:bg-zinc-800 text-zinc-300'
             }`}
           >
-            <Sliders className="w-4 h-4 text-indigo-600" />
+            <Sliders className="w-4 h-4 text-amber-500" />
             <span>EXIF・メタデータ確認</span>
             {showMetadataPanel ? (
               <ChevronUp className="w-3.5 h-3.5" />
@@ -380,17 +395,17 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={handleCopy}
-            className="px-3.5 py-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 text-stone-700 text-xs sm:text-sm font-medium transition flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2.5 rounded-xl border border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-xs sm:text-sm font-medium transition flex items-center gap-1.5 cursor-pointer"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'コピー完了' : 'コピー'}</span>
           </button>
 
           <button
             onClick={handleDownload}
-            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-zinc-950 text-xs sm:text-sm font-bold transition flex items-center gap-1.5 shadow-md cursor-pointer"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-zinc-950" />
             <span>高画質保存 (PNG)</span>
           </button>
         </div>
@@ -398,7 +413,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
 
       {/* Expandable Metadata & EXIF Editor Panel */}
       {showMetadataPanel && (
-        <div className="mt-2 pt-3 border-t border-stone-200 animate-fadeIn">
+        <div className="mt-2 pt-3 border-t border-zinc-800 animate-fadeIn">
           <MetadataPanel
             imageSrc={finalDisplayImage}
             promptUsed={promptUsed}

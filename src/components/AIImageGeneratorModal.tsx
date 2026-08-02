@@ -54,21 +54,21 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-2xl border border-stone-200 max-w-lg w-full p-6 shadow-2xl flex flex-col gap-4">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+      <div className="bg-zinc-900 rounded-2xl border border-zinc-850 max-w-lg w-full p-6 shadow-2xl flex flex-col gap-4">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-stone-100">
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-850">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center">
               <Sparkles className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-stone-900">
+            <h3 className="text-base font-bold text-zinc-100">
               Gemini AI で新規元画像を生成
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition cursor-pointer"
+            className="p-1.5 rounded-lg hover:bg-zinc-850 text-zinc-400 hover:text-zinc-100 transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -76,7 +76,7 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
 
         {/* Prompt Input */}
         <div>
-          <label className="text-xs font-bold uppercase tracking-wider text-stone-700 mb-1.5 block">
+          <label className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5 block">
             どんな画像を生成しますか？
           </label>
           <textarea
@@ -84,19 +84,19 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="例: 明るい日の光が差し込むシンプルな部屋のデスク、PCと観葉植物"
-            className="w-full rounded-xl border border-stone-300 p-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 bg-stone-50 text-stone-900 resize-none"
+            className="w-full rounded-xl border border-zinc-800 p-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500 bg-zinc-950 text-zinc-100 resize-none placeholder:text-zinc-500"
           />
 
           {/* Quick Idea Chips */}
           <div className="mt-2 flex flex-col gap-1.5">
-            <span className="text-[11px] font-medium text-stone-400">アイデア例:</span>
+            <span className="text-[11px] font-medium text-zinc-500">アイデア例:</span>
             <div className="flex flex-wrap gap-1.5">
               {PRESET_IDEAS.map((idea, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => setPrompt(idea)}
-                  className="text-xs px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition cursor-pointer text-left truncate max-w-full"
+                  className="text-xs px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-755 text-zinc-200 transition cursor-pointer text-left truncate max-w-full border border-zinc-800/30"
                 >
                   {idea}
                 </button>
@@ -107,7 +107,7 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
 
         {/* Aspect Ratio */}
         <div>
-          <label className="text-xs font-bold uppercase tracking-wider text-stone-700 mb-1.5 block">
+          <label className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5 block">
             アスペクト比
           </label>
           <div className="flex gap-2">
@@ -123,8 +123,8 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
                 onClick={() => setAspectRatio(ar.value)}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition cursor-pointer ${
                   aspectRatio === ar.value
-                    ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
-                    : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                    ? 'bg-amber-500/10 border-amber-500 text-amber-450'
+                    : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
                 }`}
               >
                 {ar.label}
@@ -135,27 +135,27 @@ export const AIImageGeneratorModal: React.FC<AIImageGeneratorModalProps> = ({
 
         {/* Error */}
         {error && (
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
+          <div className="p-3 bg-rose-955/40 border border-rose-900/50 rounded-xl text-xs text-rose-300 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-455 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {/* Actions */}
-        <div className="pt-2 flex items-center justify-end gap-2 border-t border-stone-100">
+        <div className="pt-2 flex items-center justify-end gap-2 border-t border-zinc-850">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-bold text-stone-600 bg-stone-100 hover:bg-stone-200 transition cursor-pointer"
+            className="px-4 py-2 rounded-xl text-xs font-bold text-zinc-300 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700 transition cursor-pointer"
           >
             キャンセル
           </button>
           <button
             onClick={handleGenerate}
             disabled={isLoading || !prompt.trim()}
-            className={`px-5 py-2.5 rounded-xl text-xs font-bold text-white transition flex items-center gap-2 cursor-pointer ${
+            className={`px-5 py-2.5 rounded-xl text-xs font-bold text-zinc-950 transition flex items-center gap-2 cursor-pointer ${
               isLoading || !prompt.trim()
-                ? 'bg-stone-300 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 shadow-sm'
+                ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-800/30'
+                : 'bg-amber-500 hover:bg-amber-600 shadow-md'
             }`}
           >
             {isLoading ? (
