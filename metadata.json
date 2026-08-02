@@ -1,0 +1,6 @@
+{
+  "name": "AI 画像一部分修正ツール (Inpainting Editor)",
+  "description": "画像の一部分をブラシで指定してGemini AIでピンポイントに修正・置き換え・削除するツール",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
