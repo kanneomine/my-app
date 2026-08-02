@@ -125,7 +125,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 text-stone-900 flex flex-col font-sans antialiased">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans antialiased">
       {/* Navbar Header */}
       <Header
         onOpenSamples={() => setIsSamplesModalOpen(true)}
@@ -186,14 +186,14 @@ export default function App() {
             {/* Right Column: Steps & History */}
             <div className="lg:col-span-4 flex flex-col gap-6">
               {/* Instructions Box */}
-              <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-xs flex flex-col gap-3">
-                <h3 className="text-sm font-bold text-stone-900 flex items-center gap-2">
-                  <Wand2 className="w-4 h-4 text-indigo-600" />
+              <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-5 shadow-lg flex flex-col gap-3">
+                <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
+                  <Wand2 className="w-4 h-4 text-amber-400" />
                   使い方と機能ガイド
                 </h3>
-                <ol className="text-xs text-stone-600 space-y-2.5">
+                <ol className="text-xs text-zinc-400 space-y-2.5">
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-zinc-950 text-amber-400 font-bold flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/20">
                       1
                     </span>
                     <span>
@@ -201,7 +201,7 @@ export default function App() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-zinc-950 text-amber-400 font-bold flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/20">
                       2
                     </span>
                     <span>
@@ -209,7 +209,7 @@ export default function App() {
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-zinc-950 text-amber-400 font-bold flex items-center justify-center shrink-0 mt-0.5 border border-amber-500/20">
                       3
                     </span>
                     <span>
@@ -234,7 +234,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-stone-200 py-4 text-center text-xs text-stone-500 mt-auto">
+      <footer className="bg-zinc-900/60 border-t border-zinc-800 py-4 text-center text-xs text-zinc-400 mt-auto">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>AI 一部分画像修正ツール (Inpainting Editor) • Powered by Gemini AI</span>
           <span>高精度AIで自然に背景と馴染ませて部分選択編集</span>

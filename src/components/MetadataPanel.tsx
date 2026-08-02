@@ -217,18 +217,18 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   };
 
   return (
-    <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 flex flex-col gap-4 text-xs sm:text-sm text-stone-800">
+    <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 sm:p-5 flex flex-col gap-4 text-xs sm:text-sm text-zinc-200">
       {/* Header title */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-3">
         <div className="flex items-center gap-2">
-          <div className="p-2 bg-indigo-100 text-indigo-700 rounded-xl">
+          <div className="p-2 bg-amber-500/10 text-amber-500 rounded-xl">
             <Sliders className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+            <h3 className="font-bold text-zinc-100 text-sm sm:text-base flex items-center gap-1.5">
               画像メタデータ (EXIF) インスペクター & 編集
             </h3>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-zinc-400">
               画像の撮影・解像度・カメラ設定およびAI生成タグの確認・任意編集が可能です
             </p>
           </div>
@@ -241,7 +241,7 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 cursor-pointer ${
               isSaved
                 ? 'bg-emerald-600 text-white'
-                : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
+                : 'bg-amber-500 hover:bg-amber-600 text-zinc-950 shadow-md'
             }`}
           >
             {isSaved ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
@@ -252,41 +252,41 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Quick Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex flex-col gap-0.5">
-          <span className="text-[10px] uppercase font-bold text-stone-400">解像度</span>
-          <span className="font-mono font-bold text-stone-800 text-xs truncate">
+        <div className="bg-zinc-900 p-2.5 rounded-xl border border-zinc-850 flex flex-col gap-0.5">
+          <span className="text-[10px] uppercase font-bold text-zinc-500">解像度</span>
+          <span className="font-mono font-bold text-zinc-200 text-xs truncate">
             {metadata.dimensions}
           </span>
         </div>
-        <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex flex-col gap-0.5">
-          <span className="text-[10px] uppercase font-bold text-stone-400">ファイル形式 / サイズ</span>
-          <span className="font-mono font-bold text-stone-800 text-xs truncate">
+        <div className="bg-zinc-900 p-2.5 rounded-xl border border-zinc-850 flex flex-col gap-0.5">
+          <span className="text-[10px] uppercase font-bold text-zinc-500">ファイル形式 / サイズ</span>
+          <span className="font-mono font-bold text-zinc-200 text-xs truncate">
             {metadata.format} ({metadata.fileSizeEstimate})
           </span>
         </div>
-        <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex flex-col gap-0.5">
-          <span className="text-[10px] uppercase font-bold text-stone-400">カメラ / モデル</span>
-          <span className="font-mono font-bold text-stone-800 text-xs truncate">
+        <div className="bg-zinc-900 p-2.5 rounded-xl border border-zinc-850 flex flex-col gap-0.5">
+          <span className="text-[10px] uppercase font-bold text-zinc-500">カメラ / モデル</span>
+          <span className="font-mono font-bold text-zinc-200 text-xs truncate">
             {metadata.cameraMake} {metadata.cameraModel}
           </span>
         </div>
-        <div className="bg-white p-2.5 rounded-xl border border-stone-200 flex flex-col gap-0.5">
-          <span className="text-[10px] uppercase font-bold text-stone-400">AI指示文</span>
-          <span className="font-mono font-bold text-indigo-700 text-xs truncate" title={metadata.aiPromptUsed}>
+        <div className="bg-zinc-900 p-2.5 rounded-xl border border-zinc-850 flex flex-col gap-0.5">
+          <span className="text-[10px] uppercase font-bold text-zinc-500">AI指示文</span>
+          <span className="font-mono font-bold text-amber-400 text-xs truncate" title={metadata.aiPromptUsed}>
             {metadata.aiPromptUsed || 'なし'}
           </span>
         </div>
       </div>
 
       {/* Tab Switcher */}
-      <div className="flex items-center gap-1 bg-stone-200/70 p-1 rounded-xl border border-stone-300/50">
+      <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
         <button
           type="button"
           onClick={() => setActiveTab('basic')}
           className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === 'basic'
-              ? 'bg-white text-indigo-700 shadow-xs'
-              : 'text-stone-600 hover:text-stone-900'
+              ? 'bg-amber-500 text-zinc-950 shadow-md font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           <FileText className="w-3.5 h-3.5" />
@@ -298,8 +298,8 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           onClick={() => setActiveTab('exif')}
           className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === 'exif'
-              ? 'bg-white text-indigo-700 shadow-xs'
-              : 'text-stone-600 hover:text-stone-900'
+              ? 'bg-amber-500 text-zinc-950 shadow-md font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           <Camera className="w-3.5 h-3.5" />
@@ -311,8 +311,8 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           onClick={() => setActiveTab('gps')}
           className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === 'gps'
-              ? 'bg-white text-indigo-700 shadow-xs'
-              : 'text-stone-600 hover:text-stone-900'
+              ? 'bg-amber-500 text-zinc-950 shadow-md font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           <MapPin className="w-3.5 h-3.5" />
@@ -324,8 +324,8 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           onClick={() => setActiveTab('raw')}
           className={`flex-1 py-1.5 px-2 rounded-lg font-bold text-xs transition flex items-center justify-center gap-1.5 cursor-pointer ${
             activeTab === 'raw'
-              ? 'bg-white text-indigo-700 shadow-xs'
-              : 'text-stone-600 hover:text-stone-900'
+              ? 'bg-amber-500 text-zinc-950 shadow-md font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
           <Cpu className="w-3.5 h-3.5" />
@@ -335,65 +335,65 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Tab 1: Basic & AI Metadata */}
       {activeTab === 'basic' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white p-4 rounded-xl border border-stone-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-zinc-900 p-4 rounded-xl border border-zinc-850">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700 flex items-center gap-1">
-              <Tag className="w-3.5 h-3.5 text-indigo-600" />
+            <label className="text-xs font-bold text-zinc-300 flex items-center gap-1">
+              <Tag className="w-3.5 h-3.5 text-amber-500" />
               画像タイトル
             </label>
             <input
               type="text"
               value={metadata.title}
               onChange={(e) => handleChange('title', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs sm:text-sm"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs sm:text-sm text-zinc-100"
               placeholder="画像タイトルを入力"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700 flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-indigo-600" />
+            <label className="text-xs font-bold text-zinc-300 flex items-center gap-1">
+              <Calendar className="w-3.5 h-3.5 text-amber-500" />
               作成・編集日時
             </label>
             <input
               type="text"
               value={metadata.dateCreated}
               onChange={(e) => handleChange('dateCreated', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs sm:text-sm"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs sm:text-sm text-zinc-100"
             />
           </div>
 
           <div className="sm:col-span-2 flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+            <label className="text-xs font-bold text-zinc-300 flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               AI 修正指示文 (プロンプト)
             </label>
             <textarea
               rows={2}
               value={metadata.aiPromptUsed}
               onChange={(e) => handleChange('aiPromptUsed', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 text-xs sm:text-sm font-mono resize-none"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 text-xs sm:text-sm font-mono resize-none text-zinc-100"
               placeholder="使用したプロンプト"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700">編集モード</label>
+            <label className="text-xs font-bold text-zinc-300">編集モード</label>
             <input
               type="text"
               value={metadata.aiMode}
               onChange={(e) => handleChange('aiMode', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700">処理ソフトウェア</label>
+            <label className="text-xs font-bold text-zinc-300">処理ソフトウェア</label>
             <input
               type="text"
               value={metadata.software}
               onChange={(e) => handleChange('software', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
             />
           </div>
         </div>
@@ -401,32 +401,32 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Tab 2: Camera & EXIF Data */}
       {activeTab === 'exif' && (
-        <div className="flex flex-col gap-3 bg-white p-4 rounded-xl border border-stone-200">
+        <div className="flex flex-col gap-3 bg-zinc-900 p-4 rounded-xl border border-zinc-850">
           {/* Presets Header */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-2.5">
-            <span className="text-xs font-bold text-stone-600 flex items-center gap-1">
-              <Camera className="w-3.5 h-3.5 text-indigo-600" />
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-850 pb-2.5">
+            <span className="text-xs font-bold text-zinc-400 flex items-center gap-1">
+              <Camera className="w-3.5 h-3.5 text-amber-500" />
               EXIFプリセットクイック適用:
             </span>
             <div className="flex items-center gap-1.5 flex-wrap">
               <button
                 type="button"
                 onClick={() => handleApplyPreset('ai')}
-                className="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold transition cursor-pointer"
+                className="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-bold transition cursor-pointer border border-amber-500/20"
               >
                 ✨ AI標準
               </button>
               <button
                 type="button"
                 onClick={() => handleApplyPreset('dslr')}
-                className="px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition cursor-pointer"
+                className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-xs font-bold transition cursor-pointer border border-zinc-700/60"
               >
                 📷 一眼レフ (Canon R5)
               </button>
               <button
                 type="button"
                 onClick={() => handleApplyPreset('mobile')}
-                className="px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition cursor-pointer"
+                className="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-xs font-bold transition cursor-pointer border border-zinc-700/60"
               >
                 📱 スマホ (iPhone 15)
               </button>
@@ -435,65 +435,65 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">カメラメーカー (Make)</label>
+              <label className="text-xs font-bold text-zinc-300">カメラメーカー (Make)</label>
               <input
                 type="text"
                 value={metadata.cameraMake}
                 onChange={(e) => handleChange('cameraMake', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs text-zinc-100"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">カメラモデル (Model)</label>
+              <label className="text-xs font-bold text-zinc-300">カメラモデル (Model)</label>
               <input
                 type="text"
                 value={metadata.cameraModel}
                 onChange={(e) => handleChange('cameraModel', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs text-zinc-100"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">ISO 感度</label>
+              <label className="text-xs font-bold text-zinc-300">ISO 感度</label>
               <input
                 type="text"
                 value={metadata.iso}
                 onChange={(e) => handleChange('iso', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="100"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">絞り値 (F-Number)</label>
+              <label className="text-xs font-bold text-zinc-300">絞り値 (F-Number)</label>
               <input
                 type="text"
                 value={metadata.aperture}
                 onChange={(e) => handleChange('aperture', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="f/2.8"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">シャッター速度</label>
+              <label className="text-xs font-bold text-zinc-300">シャッター速度</label>
               <input
                 type="text"
                 value={metadata.shutterSpeed}
                 onChange={(e) => handleChange('shutterSpeed', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="1/250s"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-bold text-stone-700">焦点距離 (Focal Length)</label>
+              <label className="text-xs font-bold text-zinc-300">焦点距離 (Focal Length)</label>
               <input
                 type="text"
                 value={metadata.focalLength}
                 onChange={(e) => handleChange('focalLength', e.target.value)}
-                className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="35mm"
               />
             </div>
@@ -503,24 +503,24 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Tab 3: GPS & Copyright */}
       {activeTab === 'gps' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white p-4 rounded-xl border border-stone-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-zinc-900 p-4 rounded-xl border border-zinc-850">
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700 flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5 text-indigo-600" />
+            <label className="text-xs font-bold text-zinc-300 flex items-center gap-1">
+              <Globe className="w-3.5 h-3.5 text-amber-500" />
               撮影/編集地名 (Location Name)
             </label>
             <input
               type="text"
               value={metadata.locationName}
               onChange={(e) => handleChange('locationName', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs text-zinc-100"
               placeholder="例: 東京都渋谷区"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700 flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-indigo-600" />
+            <label className="text-xs font-bold text-zinc-300 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-amber-500" />
               緯度・経度 (Lat, Long)
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -528,36 +528,36 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
                 type="text"
                 value={metadata.latitude}
                 onChange={(e) => handleChange('latitude', e.target.value)}
-                className="px-2.5 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-2.5 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="緯度 (35.6580)"
               />
               <input
                 type="text"
                 value={metadata.longitude}
                 onChange={(e) => handleChange('longitude', e.target.value)}
-                className="px-2.5 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-mono text-xs"
+                className="px-2.5 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-mono text-xs text-zinc-100"
                 placeholder="経度 (139.7016)"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700">作者 / 作成者 (Author)</label>
+            <label className="text-xs font-bold text-zinc-300">作者 / 作成者 (Author)</label>
             <input
               type="text"
               value={metadata.author}
               onChange={(e) => handleChange('author', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs text-zinc-100"
             />
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs font-bold text-stone-700">著作権表示 (Copyright)</label>
+            <label className="text-xs font-bold text-zinc-300">著作権表示 (Copyright)</label>
             <input
               type="text"
               value={metadata.copyright}
               onChange={(e) => handleChange('copyright', e.target.value)}
-              className="px-3 py-2 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-stone-50 font-medium text-xs"
+              className="px-3 py-2 rounded-lg border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-zinc-950 font-medium text-xs text-zinc-100"
             />
           </div>
         </div>
@@ -565,17 +565,17 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
 
       {/* Tab 4: Raw JSON View */}
       {activeTab === 'raw' && (
-        <div className="bg-stone-900 text-stone-100 p-3.5 rounded-xl border border-stone-800 font-mono text-xs overflow-x-auto max-h-[220px]">
+        <div className="bg-zinc-950 text-amber-400 p-3.5 rounded-xl border border-zinc-800 font-mono text-xs overflow-x-auto max-h-[220px]">
           <pre>{JSON.stringify(metadata, null, 2)}</pre>
         </div>
       )}
 
       {/* Bottom Privacy & Export Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-stone-200">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-800">
         <button
           type="button"
           onClick={handleClearExif}
-          className="px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+          className="px-3 py-1.5 rounded-lg border border-red-900/50 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
         >
           <ShieldAlert className="w-3.5 h-3.5" />
           <span>プライバシー保護（位置情報・EXIF消去）</span>
@@ -585,16 +585,16 @@ export const MetadataPanel: React.FC<MetadataPanelProps> = ({
           <button
             type="button"
             onClick={handleCopyJson}
-            className="px-3 py-1.5 rounded-lg border border-stone-300 bg-white hover:bg-stone-100 text-stone-700 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-medium transition flex items-center gap-1.5 cursor-pointer"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? 'コピー完了' : 'JSONコピー'}</span>
           </button>
 
           <button
             type="button"
             onClick={handleDownloadMetadata}
-            className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-zinc-200 border border-zinc-750 text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>メタデータ保存 (.json)</span>

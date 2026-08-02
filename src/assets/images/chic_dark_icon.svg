@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+      <stop offset="0%" stop-color="#2d2d30" />
+      <stop offset="100%" stop-color="#0f0f11" />
+    </radialGradient>
+
+    <!-- Metallic Gold/Amber Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="50%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <!-- Glowing Blue/Purple Accent -->
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.6" filter-units="userSpaceOnUse" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" stroke="#1e1e24" stroke-width="4" />
+
+  <!-- Outer Elegant Gold Ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#goldGrad)" stroke-width="6" stroke-dasharray="10 15" opacity="0.6" />
+
+  <!-- Inner Camera/Aperture Ring -->
+  <circle cx="256" cy="256" r="130" fill="none" stroke="url(#glowGrad)" stroke-width="4" opacity="0.4" />
+
+  <!-- Shutter Blades (Elegant geometric lines) -->
+  <g stroke="url(#goldGrad)" stroke-width="3" opacity="0.8" filter="url(#shadow)">
+    <line x1="256" y1="126" x2="336" y2="206" />
+    <line x1="386" y1="256" x2="306" y2="336" />
+    <line x1="256" y1="386" x2="176" y2="306" />
+    <line x1="126" y1="256" x2="206" y2="176" />
+  </g>
+
+  <!-- Central Lens Element (Glass glow) -->
+  <circle cx="256" cy="256" r="80" fill="#121214" stroke="url(#goldGrad)" stroke-width="5" filter="url(#shadow)" />
+  <circle cx="256" cy="256" r="70" fill="url(#bgGrad)" opacity="0.9" />
+
+  <!-- Magic Sparkles (Representing AI Inpainting) -->
+  <g fill="url(#goldGrad)" filter="url(#shadow)">
+    <!-- Main Sparkle -->
+    <path d="M 256,216 Q 256,256 296,256 Q 256,256 256,296 Q 256,256 216,256 Q 256,256 256,216 Z" />
+    <!-- Small Sparkle Top-Right -->
+    <path d="M 326,176 Q 326,196 346,196 Q 326,196 326,216 Q 326,196 306,196 Q 326,196 326,176 Z" transform="scale(0.7) translate(110, 50)" />
+    <!-- Small Sparkle Bottom-Left -->
+    <path d="M 186,296 Q 186,316 206,316 Q 186,316 186,336 Q 186,316 166,316 Q 186,316 186,296 Z" transform="scale(0.6) translate(-20, 120)" />
+  </g>
+
+  <!-- Subtle Shimmer overlay -->
+  <ellipse cx="210" cy="210" rx="40" ry="20" fill="#ffffff" opacity="0.08" transform="rotate(-30 210 210)" />
+</svg>

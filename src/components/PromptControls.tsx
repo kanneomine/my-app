@@ -52,7 +52,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '☀️ 明るくする',
       text: '構図や描写はそのまま維持し、画像全体をより明るく自然で爽やかな光のバランスに調整してください',
       mode: 'lighting' as EditMode,
-      color: 'hover:bg-amber-50 hover:text-amber-800 border-amber-200 text-amber-900 bg-amber-50/60',
+      color: 'hover:bg-amber-500/20 hover:text-amber-300 border-amber-500/30 text-amber-400 bg-amber-500/5',
     },
     {
       id: 'enhance_quality',
@@ -60,7 +60,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '✨ 画質を向上させる',
       text: '構図や色彩は維持し、全体の解像感を高めて細部まで輪郭をくっきりと高画質化してください',
       mode: 'enhance' as EditMode,
-      color: 'hover:bg-purple-50 hover:text-purple-800 border-purple-200 text-purple-900 bg-purple-50/60',
+      color: 'hover:bg-purple-500/20 hover:text-purple-300 border-purple-500/30 text-purple-400 bg-purple-500/5',
     },
     {
       id: 'blur_bg',
@@ -68,7 +68,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '📷 背景をぼかす',
       text: '主要な被写体をくっきり残し、背景部分を一眼レフカメラのポートレート機能のように自然にぼかしてください',
       mode: 'edit' as EditMode,
-      color: 'hover:bg-indigo-50 hover:text-indigo-800 border-indigo-200 text-indigo-900 bg-indigo-50/60',
+      color: 'hover:bg-indigo-500/20 hover:text-indigo-300 border-indigo-500/30 text-indigo-400 bg-indigo-500/5',
     },
     {
       id: 'remove_obj',
@@ -76,7 +76,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '🗑️ 不要な物を消去',
       text: '選択した不要な物体や通行人を完全に消去し、周囲の背景となじませて補元してください',
       mode: 'remove' as EditMode,
-      color: 'hover:bg-rose-50 hover:text-rose-800 border-rose-200 text-rose-900 bg-rose-50/60',
+      color: 'hover:bg-rose-500/20 hover:text-rose-300 border-rose-500/30 text-rose-400 bg-rose-500/5',
     },
     {
       id: 'vibrant_color',
@@ -84,7 +84,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '🎨 色鮮やかに補正',
       text: '構図や被写体は維持し、白とび・黒つぶれを抑え、発色が美しくメリハリのある色彩に調整してください',
       mode: 'enhance' as EditMode,
-      color: 'hover:bg-emerald-50 hover:text-emerald-800 border-emerald-200 text-emerald-900 bg-emerald-50/60',
+      color: 'hover:bg-emerald-500/20 hover:text-emerald-300 border-emerald-500/30 text-emerald-400 bg-emerald-500/5',
     },
     {
       id: 'denoise',
@@ -92,7 +92,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       label: '🧹 ノイズ除去',
       text: '画像のザラつきやデジタルノイズを除去し、滑らかでクリアな高品位画質に補正してください',
       mode: 'enhance' as EditMode,
-      color: 'hover:bg-sky-50 hover:text-sky-800 border-sky-200 text-sky-900 bg-sky-50/60',
+      color: 'hover:bg-sky-500/20 hover:text-sky-300 border-sky-500/30 text-sky-400 bg-sky-500/5',
     },
   ];
 
@@ -164,28 +164,28 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm flex flex-col gap-5">
+    <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-5 shadow-lg flex flex-col gap-5">
       {/* Non-Destructive Protection Banner */}
-      <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2 text-stone-700 font-medium">
-          <ShieldCheck className="w-4.5 h-4.5 text-emerald-600 shrink-0" />
+      <div className="bg-zinc-950 border border-zinc-850 rounded-xl p-3 flex items-center justify-between text-xs text-zinc-300">
+        <div className="flex items-center gap-2 text-zinc-300 font-medium">
+          <ShieldCheck className="w-4.5 h-4.5 text-emerald-500 shrink-0" />
           <span>
             <strong>元画像100%保持設計:</strong> 未選択エリアのピクセルや被写体の配置は一切変更されません
           </span>
         </div>
-        <span className="text-[11px] px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md font-bold shrink-0 hidden sm:inline">
+        <span className="text-[11px] px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-md font-bold shrink-0 hidden sm:inline border border-emerald-500/20">
           完全非破壊保証
         </span>
       </div>
 
       {/* Quick Preset Chips (定番プロンプト ワンタップ挿入) */}
-      <div className="bg-gradient-to-r from-stone-50 via-indigo-50/30 to-purple-50/30 border border-stone-200 rounded-xl p-3.5 flex flex-col gap-2">
+      <div className="bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950 border border-zinc-850 rounded-xl p-3.5 flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold text-stone-800 flex items-center gap-1.5">
-            <SlidersHorizontal className="w-4 h-4 text-indigo-600" />
+          <label className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+            <SlidersHorizontal className="w-4 h-4 text-amber-500" />
             定番プロンプト (ワンタップで入力)
           </label>
-          <span className="text-[11px] text-stone-500 hidden sm:inline">
+          <span className="text-[11px] text-zinc-500 hidden sm:inline">
             ボタンをタップすると指示文とモードが自動設定されます
           </span>
         </div>
@@ -198,10 +198,10 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
                 key={chip.id}
                 type="button"
                 onClick={() => handleChipClick(chip)}
-                className={`text-xs px-3 py-1.5 rounded-xl border font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs active:scale-95 ${
+                className={`text-xs px-3 py-1.5 rounded-xl border font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 ${
                   isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                    : `bg-white ${chip.color}`
+                    ? 'bg-amber-500 text-zinc-950 border-amber-500 font-extrabold'
+                    : `bg-zinc-900 ${chip.color}`
                 }`}
               >
                 <span>{chip.label}</span>
@@ -213,7 +213,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
 
       {/* Edit Mode Tabs */}
       <div>
-        <label className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2 block">
+        <label className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2 block">
           機能モードを選択
         </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
@@ -222,15 +222,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('edit')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'edit'
-                ? 'bg-indigo-50 border-indigo-500 text-indigo-900 shadow-xs ring-1 ring-indigo-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-amber-500 text-amber-450 shadow-md ring-1 ring-amber-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Wand2 className="w-3.5 h-3.5 text-indigo-600" />
+              <Wand2 className="w-3.5 h-3.5 text-amber-500" />
               <span>自由変形</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">自由指定</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">自由指定</p>
           </button>
 
           <button
@@ -238,15 +238,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('remove')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'remove'
-                ? 'bg-rose-50 border-rose-500 text-rose-900 shadow-xs ring-1 ring-rose-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-rose-500 text-rose-450 shadow-md ring-1 ring-rose-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Eraser className="w-3.5 h-3.5 text-rose-600" />
+              <Eraser className="w-3.5 h-3.5 text-rose-500" />
               <span>消去</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">背景同化</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">背景同化</p>
           </button>
 
           <button
@@ -254,15 +254,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('replace')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'replace'
-                ? 'bg-amber-50 border-amber-500 text-amber-900 shadow-xs ring-1 ring-amber-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-amber-500 text-amber-450 shadow-md ring-1 ring-amber-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Replace className="w-3.5 h-3.5 text-amber-600" />
+              <Replace className="w-3.5 h-3.5 text-amber-500" />
               <span>置き換え</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">別物体に差替</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">別物体に差替</p>
           </button>
 
           <button
@@ -270,15 +270,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('add')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'add'
-                ? 'bg-emerald-50 border-emerald-500 text-emerald-900 shadow-xs ring-1 ring-emerald-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-emerald-500 text-emerald-450 shadow-md ring-1 ring-emerald-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <PlusCircle className="w-3.5 h-3.5 text-emerald-600" />
+              <PlusCircle className="w-3.5 h-3.5 text-emerald-500" />
               <span>要素追加</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">新しい物を追加</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">新しい物を追加</p>
           </button>
 
           <button
@@ -286,15 +286,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('lighting')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'lighting'
-                ? 'bg-sky-50 border-sky-500 text-sky-900 shadow-xs ring-1 ring-sky-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-sky-500 text-sky-450 shadow-md ring-1 ring-sky-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <SunMedium className="w-3.5 h-3.5 text-sky-600" />
+              <SunMedium className="w-3.5 h-3.5 text-sky-500" />
               <span>ライト調節</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">昼・夜・間接光</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">昼・夜・間接光</p>
           </button>
 
           <button
@@ -302,24 +302,24 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             onClick={() => onModeChange('enhance')}
             className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
               mode === 'enhance'
-                ? 'bg-purple-50 border-purple-500 text-purple-900 shadow-xs ring-1 ring-purple-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
+                ? 'bg-zinc-950 border-purple-500 text-purple-450 shadow-md ring-1 ring-purple-500'
+                : 'bg-zinc-950 border-zinc-850 text-zinc-400 hover:bg-zinc-800'
             }`}
           >
             <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+              <Sparkles className="w-3.5 h-3.5 text-purple-500" />
               <span>画質向上</span>
             </div>
-            <p className="text-[10px] text-stone-500 leading-tight">超解像・鮮明化</p>
+            <p className="text-[10px] text-zinc-500 leading-tight">超解像・鮮明化</p>
           </button>
         </div>
       </div>
 
       {/* Mode-Specific Presets Panel */}
       {mode === 'lighting' && (
-        <div className="bg-sky-50/60 border border-sky-200 rounded-xl p-3.5 flex flex-col gap-2">
-          <label className="text-xs font-bold text-sky-900 flex items-center gap-1.5">
-            <SunMedium className="w-4 h-4 text-sky-600" />
+        <div className="bg-zinc-950/60 border border-zinc-800 rounded-xl p-3.5 flex flex-col gap-2">
+          <label className="text-xs font-bold text-sky-400 flex items-center gap-1.5">
+            <SunMedium className="w-4 h-4 text-sky-500" />
             照明・ライティングのワンタップ切替
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -328,22 +328,22 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
                 key={preset.id}
                 type="button"
                 onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-sky-100/80 border border-sky-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer flex items-center gap-1.5"
+                className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left text-xs font-bold text-zinc-200 transition cursor-pointer flex items-center gap-1.5"
               >
                 <span>{preset.label}</span>
               </button>
             ))}
           </div>
-          <p className="text-[11px] text-sky-700 mt-0.5">
+          <p className="text-[11px] text-zinc-500 mt-0.5">
             ※ ブラシ未選択の場合は画像全体の光を調整し、部分選択した場合はその場所の光を重点的に調整します。
           </p>
         </div>
       )}
 
       {mode === 'enhance' && (
-        <div className="bg-purple-50/60 border border-purple-200 rounded-xl p-3.5 flex flex-col gap-2">
-          <label className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4 text-purple-600" />
+        <div className="bg-zinc-950/60 border border-zinc-800 rounded-xl p-3.5 flex flex-col gap-2">
+          <label className="text-xs font-bold text-purple-400 flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-purple-500" />
             画質向上・クッキリ鮮明化プリセット
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -352,7 +352,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
                 key={preset.id}
                 type="button"
                 onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-purple-100/80 border border-purple-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer"
+                className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-left text-xs font-bold text-zinc-200 transition cursor-pointer"
               >
                 {preset.label}
               </button>
@@ -364,11 +364,11 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       {/* Text Prompt Input */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-stone-700 flex items-center gap-1.5">
-            <MessageSquareText className="w-4 h-4 text-stone-500" />
+          <label className="text-xs font-bold uppercase tracking-wider text-zinc-300 flex items-center gap-1.5">
+            <MessageSquareText className="w-4 h-4 text-zinc-400" />
             AI 修正指示プロンプト
           </label>
-          <span className="text-[11px] text-stone-400">具体的に入力すると精度が高まります</span>
+          <span className="text-[11px] text-zinc-400">具体的に入力すると精度が高まります</span>
         </div>
 
         <div className="relative">
@@ -389,15 +389,15 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
                 ? '例: 選択した場所に、鮮やかな赤と黄色のチューリップの花束を追加してください。'
                 : '例: 選択したエリアを修正します。「背景をぼかす」「明るくする」など希望を入力してください。'
             }
-            className="w-full rounded-xl border border-stone-300 p-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-stone-50/50 text-stone-900 placeholder:text-stone-400 resize-none"
+            className="w-full rounded-xl border border-zinc-850 p-3 text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500 bg-zinc-950 text-zinc-100 placeholder:text-zinc-500 resize-none"
           />
         </div>
       </div>
 
       {/* Error Banner */}
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-start gap-2 animate-shake">
-          <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+        <div className="p-3 bg-rose-950/40 border border-rose-900/50 rounded-xl text-xs text-rose-300 flex items-start gap-2 animate-shake">
+          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
           <div className="flex-1">{error}</div>
         </div>
       )}
@@ -409,8 +409,8 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
         disabled={isLoading || !hasImage}
         className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm text-white shadow-md transition flex items-center justify-center gap-2 cursor-pointer ${
           isLoading || !hasImage
-            ? 'bg-stone-300 cursor-not-allowed shadow-none'
-            : 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:opacity-95 shadow-indigo-200 active:scale-[0.99]'
+            ? 'bg-zinc-800 text-zinc-500 border border-zinc-700/30 cursor-not-allowed shadow-none'
+            : 'bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:opacity-95 text-zinc-950 shadow-md font-extrabold active:scale-[0.99]'
         }`}
       >
         {isLoading ? (
