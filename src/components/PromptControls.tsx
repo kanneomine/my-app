@@ -323,19 +323,26 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             照明・ライティングのワンタップ切替
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {LIGHTING_PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-sky-100/80 border border-sky-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer flex items-center gap-1.5"
-              >
-                <span>{preset.label}</span>
-              </button>
-            ))}
+            {LIGHTING_PRESETS.map((preset) => {
+              const isSelected = prompt === preset.text;
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => onPromptChange(preset.text)}
+                  className={`p-2 rounded-lg text-left text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-2xs active:scale-95 border ${
+                    isSelected
+                      ? 'bg-sky-600 text-white border-sky-600 shadow-md ring-1 ring-sky-500'
+                      : 'bg-white hover:bg-sky-100/80 border-sky-200 text-stone-800'
+                  }`}
+                >
+                  <span>{preset.label}</span>
+                </button>
+              );
+            })}
           </div>
           <p className="text-[11px] text-sky-700 mt-0.5">
-            ※ ブラシ未選択の場合は画像全体の光を調整し、部分選択した場合はその場所の光を重点的に調整します。
+            ※ 対象物の選択がない場合は画像全体の光を調整し、部分選択した場合はその場所の光を重点的に調整します。
           </p>
         </div>
       )}
@@ -347,16 +354,23 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             画質向上・クッキリ鮮明化プリセット
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {ENHANCE_PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-purple-100/80 border border-purple-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer"
-              >
-                {preset.label}
-              </button>
-            ))}
+            {ENHANCE_PRESETS.map((preset) => {
+              const isSelected = prompt === preset.text;
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => onPromptChange(preset.text)}
+                  className={`p-2 rounded-lg text-left text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95 border ${
+                    isSelected
+                      ? 'bg-purple-600 text-white border-purple-600 shadow-md ring-1 ring-purple-500'
+                      : 'bg-white hover:bg-purple-100/80 border-purple-200 text-stone-800'
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
