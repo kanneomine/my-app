@@ -1,11 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
-  Paintbrush,
-  Eraser,
   Undo2,
   Redo2,
   Trash2,
-  Square,
   Eye,
   EyeOff,
   ZoomIn,
@@ -13,7 +10,6 @@ import {
   RotateCcw,
   Sparkles,
 } from 'lucide-react';
-import { ToolType } from '../types';
 
 interface ImageCanvasProps {
   imageSrc: string;
@@ -31,10 +27,8 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
   const maskCanvasRef = useRef<HTMLCanvasElement>(null); // Black/White offscreen mask canvas
   const overlayCanvasRef = useRef<HTMLCanvasElement>(null); // Visual red overlay canvas
 
-  // Drawing state
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [tool, setTool] = useState<ToolType>('brush');
-  const [brushSize, setBrushSize] = useState<number>(35);
+  // Object Selection state
+  const [brushSize, setBrushSize] = useState<number>(60);
   const [maskOpacity, setMaskOpacity] = useState<number>(0.6);
   const [showMaskOverlay, setShowMaskOverlay] = useState<boolean>(true);
   const [hasMask, setHasMask] = useState<boolean>(false);
@@ -44,9 +38,6 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
   const historyStepRef = useRef<number>(-1);
   const [canUndo, setCanUndo] = useState(false);
   const [canRedo, setCanRedo] = useState(false);
-
-  // Rect selection state
-  const startPosRef = useRef<{ x: number; y: number } | null>(null);
 
   // Image dimensions
   const [imgDimensions, setImgDimensions] = useState<{ width: number; height: number }>({
@@ -255,50 +246,29 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
     };
   };
 
-  const drawStroke = (x: number, y: number, isStart: boolean) => {
-    const maskCanvas = maskCanvasRef.current;
-    if (!maskCanvas) return;
-    const ctx = maskCanvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.lineWidth = brushSize;
-
-    if (tool === 'brush') {
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.fillStyle = '#FFFFFF';
-    } else if (tool === 'eraser') {
-      ctx.strokeStyle = '#000000';
-      ctx.fillStyle = '#000000';
-    }
-
-    if (isStart) {
-      ctx.beginPath();
-      ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-      ctx.stroke();
-    }
-
-    checkHasMask();
-    updateOverlayAndEmit();
-  };
-
   const handlePointerDown = (e: React.MouseEvent | React.TouchEvent) => {
     if (isLoading) return;
     const coords = getCanvasCoords(e);
     if (!coords) return;
 
-    setIsDrawing(true);
-    startPosRef.current = { x: coords.x, y: coords.y };
+    const maskCanvas = maskCanvasRef.current;
+    if (!maskCanvas) return;
+    const ctx = maskCanvas.getContext('2d');
+    if (!ctx) return;
 
-    if (tool === 'brush' || tool === 'eraser') {
-      drawStroke(coords.x, coords.y, true);
-    }
+    // Clear previous mask first so a new click selects a single target object
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+
+    // Draw select circle (radius is brushSize / 2 to match hover preview diameter)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(coords.x, coords.y, brushSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    checkHasMask();
+    saveHistoryStep();
+    updateOverlayAndEmit();
   };
 
   const handlePointerMove = (e: React.MouseEvent | React.TouchEvent) => {
@@ -306,43 +276,10 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
     if (coords) {
       setMousePos({ x: coords.screenX, y: coords.screenY });
     }
-
-    if (!isDrawing || isLoading) return;
-    if (!coords) return;
-
-    if (tool === 'brush' || tool === 'eraser') {
-      drawStroke(coords.x, coords.y, false);
-    } else if (tool === 'rect' && startPosRef.current) {
-      // Preview rect
-      const maskCanvas = maskCanvasRef.current;
-      if (!maskCanvas) return;
-      const ctx = maskCanvas.getContext('2d');
-      if (!ctx) return;
-
-      // Temporary draw for rect
-      const startX = startPosRef.current.x;
-      const startY = startPosRef.current.y;
-      const width = coords.x - startX;
-      const height = coords.y - startY;
-
-      // Restore last history before drawing current drag rect
-      if (historyRef.current[historyStepRef.current]) {
-        ctx.putImageData(historyRef.current[historyStepRef.current], 0, 0);
-      }
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(startX, startY, width, height);
-
-      checkHasMask();
-      updateOverlayAndEmit();
-    }
   };
 
   const handlePointerUp = () => {
-    if (isDrawing) {
-      setIsDrawing(false);
-      startPosRef.current = null;
-      saveHistoryStep();
-    }
+    // No-op since we select on click
   };
 
   const handleClearMask = () => {
@@ -448,55 +385,19 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
     <div className="flex flex-col bg-stone-900 rounded-2xl overflow-hidden border border-stone-800 shadow-xl">
       {/* Top Toolbar */}
       <div className="bg-stone-950 px-4 py-3 border-b border-stone-800 flex flex-wrap items-center justify-between gap-3 text-stone-300">
-        {/* Tool selector buttons */}
-        <div className="flex items-center gap-1.5 bg-stone-900 p-1 rounded-xl border border-stone-800">
-          <button
-            onClick={() => setTool('brush')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
-              tool === 'brush'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
-            }`}
-            title="塗りつぶしブラシ (部分選択)"
-          >
-            <Paintbrush className="w-3.5 h-3.5" />
-            <span>ブラシ</span>
-          </button>
-
-          <button
-            onClick={() => setTool('eraser')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
-              tool === 'eraser'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
-            }`}
-            title="マスクを消去"
-          >
-            <Eraser className="w-3.5 h-3.5" />
-            <span>消しゴム</span>
-          </button>
-
-          <button
-            onClick={() => setTool('rect')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition cursor-pointer ${
-              tool === 'rect'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'hover:bg-stone-800 text-stone-400 hover:text-stone-200'
-            }`}
-            title="四角形選択"
-          >
-            <Square className="w-3.5 h-3.5" />
-            <span>範囲選択</span>
-          </button>
+        {/* Active Select Indicator */}
+        <div className="flex items-center gap-2 bg-stone-900 px-3.5 py-1.5 rounded-xl border border-stone-800 text-xs text-stone-300 font-semibold">
+          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+          <span>👉 対象物をタップして選択</span>
         </div>
 
-        {/* Brush Size Slider */}
+        {/* Selection Size Slider */}
         <div className="flex items-center gap-2 bg-stone-900 px-3 py-1.5 rounded-xl border border-stone-800">
-          <span className="text-xs text-stone-400 font-medium">サイズ</span>
+          <span className="text-xs text-stone-400 font-medium">選択サイズ</span>
           <input
             type="range"
-            min="5"
-            max="120"
+            min="10"
+            max="250"
             value={brushSize}
             onChange={(e) => setBrushSize(Number(e.target.value))}
             className="w-24 sm:w-28 accent-indigo-500 cursor-pointer"
@@ -540,27 +441,27 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
 
           {/* Smart Selection Quick Buttons */}
           <div className="hidden sm:flex items-center gap-1 bg-stone-900 p-0.5 rounded-lg border border-stone-800 text-[11px]">
-            <span className="text-stone-500 px-1.5">範囲:</span>
+            <span className="text-stone-500 px-1.5">自動選択:</span>
             <button
               onClick={() => handleSmartPreset('center')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
-              title="中央の被写体を概算選択"
+              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer font-bold"
+              title="主被写体を自動選択"
             >
-              中央被写体
+              主被写体
             </button>
             <button
               onClick={() => handleSmartPreset('bg')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
-              title="背景全体を選択"
+              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer font-bold"
+              title="背景全体を自動選択"
             >
-              背景全体
+              背景
             </button>
             <button
               onClick={() => handleSmartPreset('all')}
-              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer"
-              title="画像全体（ライティング・画質調整用）"
+              className="px-2 py-1 rounded-md bg-stone-800 hover:bg-stone-700 text-stone-300 transition cursor-pointer font-bold"
+              title="画像全体を選択（ライティング・画質調整用）"
             >
-              全選択
+              画像全体
             </button>
           </div>
 
@@ -616,10 +517,10 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
             onTouchEnd={handlePointerUp}
           />
 
-          {/* Brush Diameter Circle Preview */}
-          {mousePos && (tool === 'brush' || tool === 'eraser') && (
+          {/* Selection Diameter Circle Preview */}
+          {mousePos && (
             <div
-              className="pointer-events-none absolute rounded-full border-2 border-white/90 bg-red-500/20 shadow-xs -translate-x-1/2 -translate-y-1/2"
+              className="pointer-events-none absolute rounded-full border-2 border-white/90 bg-indigo-500/20 shadow-xs -translate-x-1/2 -translate-y-1/2"
               style={{
                 left: `${mousePos.x}px`,
                 top: `${mousePos.y}px`,
@@ -658,7 +559,7 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
           <span>
             {hasMask
               ? '修正したい対象エリアが選択されています (赤色部分)'
-              : '画像上の修正したい場所をブラシで塗ってください'}
+              : '画像内の修正したい対象物をタップして選択してください'}
           </span>
         </div>
         <span className="hidden sm:inline text-stone-500 font-mono">

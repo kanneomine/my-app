@@ -197,7 +197,7 @@ export default function App() {
                       1
                     </span>
                     <span>
-                      <strong>ピンポイント範囲選択:</strong> 調整可能なブラシ（サイズ・消しゴム・矩形選択）やクイック選択ボタンで修正エリアを塗り潰します。
+                      <strong>ピンポイント範囲選択:</strong> 画像内の修正したい対象物をタップして直接選択します。選択サイズスライダーで選択範囲の大きさを調整できます。
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
