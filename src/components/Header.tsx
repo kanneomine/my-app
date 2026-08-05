@@ -1,6 +1,5 @@
 import React from 'react';
-import { Sparkles, Image as ImageIcon, RefreshCw } from 'lucide-react';
-import greenMarbleIcon from '../assets/images/green_marble_icon_1785628289395.jpg';
+import { Sparkles, Image as ImageIcon, RefreshCw, Sparkle } from 'lucide-react';
 
 interface HeaderProps {
   onOpenSamples: () => void;
@@ -19,13 +18,10 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="bg-white border-b border-stone-200 sticky top-0 z-30 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl overflow-hidden border border-emerald-800/20 shadow-md shadow-emerald-900/10 shrink-0 bg-emerald-900">
-            <img
-              src={greenMarbleIcon}
-              alt="Green Marble Icon"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+          {/* Instant-load CSS-based Glossy Green Marble Emblem */}
+          <div className="w-10 h-10 rounded-xl overflow-hidden border border-emerald-700/30 shadow-md shadow-emerald-900/10 shrink-0 bg-gradient-to-tr from-emerald-900 via-emerald-700 to-teal-500 flex items-center justify-center relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/25 via-transparent to-transparent pointer-events-none" />
+            <Sparkle className="w-5 h-5 text-emerald-100 animate-pulse" />
           </div>
           <div>
             <h1 className="text-lg font-bold text-stone-900 leading-tight flex items-center gap-2">
