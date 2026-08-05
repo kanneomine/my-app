@@ -57,7 +57,7 @@ interface MetadataPanelProps {
 export const MetadataPanel: React.FC<MetadataPanelProps> = ({
   imageSrc,
   promptUsed = '',
-  editMode = 'edit',
+  editMode = 'replace',
   onMetadataSave,
 }) => {
   const [activeTab, setActiveTab] = useState<'basic' | 'exif' | 'gps' | 'raw'>('basic');
