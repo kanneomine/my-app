@@ -406,6 +406,38 @@ export const ImageCanvas: React.FC<ImageCanvasProps> = ({
             {brushSize}px
           </span>
         </div>
+      </div>
+
+      {/* Target Object Selection Size Presets Sub-toolbar */}
+      <div className="bg-stone-900/95 px-4 py-2.5 border-b border-stone-800 flex flex-wrap items-center gap-2 text-stone-300 text-xs justify-start">
+        <span className="text-stone-400 font-bold shrink-0">🎯 対象物ごとの選択サイズ:</span>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { id: 'small', label: '🔍 コップ・小物', size: 25 },
+            { id: 'medium', label: '🚰 洗面台・卓上', size: 65 },
+            { id: 'large', label: '🛋️ ソファー・家具', size: 120 },
+            { id: 'huge', label: '🧱 壁・広範囲', size: 220 },
+          ].map((preset) => {
+            const isSelected = brushSize === preset.size;
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => setBrushSize(preset.size)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer flex items-center gap-1 active:scale-95 border ${
+                  isSelected
+                    ? 'bg-indigo-600 text-white shadow-md border-indigo-500'
+                    : 'bg-stone-800 hover:bg-stone-700 text-stone-300 border-stone-700'
+                }`}
+              >
+                <span>{preset.label}</span>
+                <span className={`text-[10px] ${isSelected ? 'text-indigo-200' : 'text-stone-500'} font-normal ml-0.5`}>
+                  ({preset.size}px)
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
         {/* Undo / Redo / Clear / Smart Selection */}
         <div className="flex flex-wrap items-center gap-1.5">
