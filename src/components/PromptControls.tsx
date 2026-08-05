@@ -216,23 +216,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
         <label className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2 block">
           機能モードを選択
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
-          <button
-            type="button"
-            onClick={() => onModeChange('edit')}
-            className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
-              mode === 'edit'
-                ? 'bg-indigo-50 border-indigo-500 text-indigo-900 shadow-xs ring-1 ring-indigo-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
-            }`}
-          >
-            <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Wand2 className="w-3.5 h-3.5 text-indigo-600" />
-              <span>自由変形</span>
-            </div>
-            <p className="text-[10px] text-stone-500 leading-tight">自由指定</p>
-          </button>
-
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
           <button
             type="button"
             onClick={() => onModeChange('remove')}

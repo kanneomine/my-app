@@ -17,7 +17,7 @@ export default function App() {
   const [compositeImage, setCompositeImage] = useState<string | null>(null);
 
   const [prompt, setPrompt] = useState<string>('');
-  const [mode, setMode] = useState<EditMode>('edit');
+  const [mode, setMode] = useState<EditMode>('replace');
 
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [lastPromptUsed, setLastPromptUsed] = useState<string>('');
@@ -197,7 +197,7 @@ export default function App() {
                       1
                     </span>
                     <span>
-                      <strong>ピンポイント範囲選択:</strong> 画像内の修正したい対象物をタップして直接選択します。選択サイズスライダーで選択範囲の大きさを調整できます。
+                      <strong>タップして対象物選択:</strong> 画像内の修正・変更したい対象物（壁、洗面台、ソファーなど）を直接タップして選択します。選択サイズスライダーで選択範囲の大きさを調整できます。
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
