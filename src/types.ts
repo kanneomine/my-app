@@ -1,4 +1,4 @@
-export type EditMode = 'edit' | 'remove' | 'replace' | 'add' | 'lighting' | 'enhance';
+export type EditMode = 'remove' | 'replace' | 'add' | 'lighting' | 'enhance';
 
 export type ToolType = 'brush' | 'eraser' | 'rect';
 

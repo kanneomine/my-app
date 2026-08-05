@@ -79,7 +79,9 @@ export const HistorySidebar: React.FC<HistorySidebarProps> = ({
                   ? '置換'
                   : item.mode === 'add'
                   ? '追加'
-                  : '自由編集'}
+                  : item.mode === 'lighting'
+                  ? 'ライト調整'
+                  : '画質向上'}
               </span>
             </div>
 
