@@ -67,7 +67,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       icon: Aperture,
       label: '📷 背景をぼかす',
       text: '主要な被写体をくっきり残し、背景部分を一眼レフカメラのポートレート機能のように自然にぼかしてください',
-      mode: 'edit' as EditMode,
+      mode: 'replace' as EditMode,
       color: 'hover:bg-indigo-50 hover:text-indigo-800 border-indigo-200 text-indigo-900 bg-indigo-50/60',
     },
     {
