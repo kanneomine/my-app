@@ -5,6 +5,7 @@ import {
   Check,
   Split,
   Columns,
+  Rows,
   Maximize2,
   Sparkles,
   RefreshCcw,
@@ -32,7 +33,7 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
   promptUsed,
 }) => {
   const [sliderPos, setSliderPos] = useState<number>(50); // percentage 0 - 100
-  const [viewMode, setViewMode] = useState<'slider' | 'sideBySide' | 'resultOnly'>('slider');
+  const [viewMode, setViewMode] = useState<'slider' | 'sideBySide' | 'vertical' | 'resultOnly'>('sideBySide');
   const [copied, setCopied] = useState<boolean>(false);
   const [isApplied, setIsApplied] = useState<boolean>(false);
   const [showMetadataPanel, setShowMetadataPanel] = useState<boolean>(false);
@@ -184,7 +185,31 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
         </div>
 
         {/* View Mode Switcher */}
-        <div className="flex items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+        <div className="flex flex-wrap items-center gap-1 bg-stone-100 p-1 rounded-xl border border-stone-200">
+          <button
+            onClick={() => setViewMode('sideBySide')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              viewMode === 'sideBySide'
+                ? 'bg-white text-indigo-700 shadow-xs'
+                : 'text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Columns className="w-3.5 h-3.5" />
+            <span>左右に並べる</span>
+          </button>
+
+          <button
+            onClick={() => setViewMode('vertical')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+              viewMode === 'vertical'
+                ? 'bg-white text-indigo-700 shadow-xs'
+                : 'text-stone-600 hover:text-stone-900'
+            }`}
+          >
+            <Rows className="w-3.5 h-3.5" />
+            <span>上下に並べる</span>
+          </button>
+
           <button
             onClick={() => setViewMode('slider')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
@@ -195,18 +220,6 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
           >
             <Split className="w-3.5 h-3.5" />
             <span>スライダー比較</span>
-          </button>
-
-          <button
-            onClick={() => setViewMode('sideBySide')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
-              viewMode === 'sideBySide'
-                ? 'bg-white text-indigo-700 shadow-xs'
-                : 'text-stone-600 hover:text-stone-900'
-            }`}
-          >
-            <Columns className="w-3.5 h-3.5" />
-            <span>並べて比較</span>
           </button>
 
           <button
@@ -322,6 +335,39 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
               修正後（Gemini AI 生成 + 未選択完全保護）
             </span>
             <div className="rounded-xl border border-indigo-200 overflow-hidden bg-stone-900 aspect-square flex items-center justify-center shadow-xs">
+              <img
+                src={finalDisplayImage}
+                alt="After"
+                className="max-h-full max-w-full object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewMode === 'vertical' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
+              修正前（元画像）
+            </span>
+            <div className="rounded-xl border border-stone-200 overflow-hidden bg-stone-900 h-[280px] sm:h-[360px] flex items-center justify-center">
+              <img
+                src={originalImage}
+                alt="Before"
+                className="max-h-full max-w-full object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              修正後（Gemini AI 生成 + 未選択完全保護）
+            </span>
+            <div className="rounded-xl border border-indigo-200 overflow-hidden bg-stone-900 h-[280px] sm:h-[360px] flex items-center justify-center shadow-xs">
               <img
                 src={finalDisplayImage}
                 alt="After"
