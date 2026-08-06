@@ -50,14 +50,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-6 max-w-3xl mx-auto py-8">
+    <div className="flex flex-col gap-4 max-w-3xl mx-auto py-1">
       {/* Upload Box */}
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`border-2 border-dashed rounded-3xl p-8 sm:p-12 text-center transition cursor-pointer flex flex-col items-center justify-center gap-4 bg-white shadow-xs ${
+        className={`border-2 border-dashed rounded-2xl p-4 sm:p-5 text-center transition cursor-pointer flex flex-col items-center justify-center gap-2 bg-white shadow-xs ${
           isDragging
             ? 'border-indigo-500 bg-indigo-50/50 scale-[1.01]'
             : 'border-stone-300 hover:border-stone-400 hover:bg-stone-50/50'

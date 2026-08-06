@@ -67,7 +67,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
       icon: Aperture,
       label: '📷 背景をぼかす',
       text: '主要な被写体をくっきり残し、背景部分を一眼レフカメラのポートレート機能のように自然にぼかしてください',
-      mode: 'edit' as EditMode,
+      mode: 'replace' as EditMode,
       color: 'hover:bg-indigo-50 hover:text-indigo-800 border-indigo-200 text-indigo-900 bg-indigo-50/60',
     },
     {
@@ -216,23 +216,7 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
         <label className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2 block">
           機能モードを選択
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
-          <button
-            type="button"
-            onClick={() => onModeChange('edit')}
-            className={`p-2.5 rounded-xl border text-left flex flex-col gap-0.5 transition cursor-pointer ${
-              mode === 'edit'
-                ? 'bg-indigo-50 border-indigo-500 text-indigo-900 shadow-xs ring-1 ring-indigo-500'
-                : 'bg-stone-50 border-stone-200 text-stone-600 hover:bg-stone-100'
-            }`}
-          >
-            <div className="flex items-center gap-1.5 font-bold text-xs">
-              <Wand2 className="w-3.5 h-3.5 text-indigo-600" />
-              <span>自由変形</span>
-            </div>
-            <p className="text-[10px] text-stone-500 leading-tight">自由指定</p>
-          </button>
-
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
           <button
             type="button"
             onClick={() => onModeChange('remove')}
@@ -323,19 +307,26 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             照明・ライティングのワンタップ切替
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {LIGHTING_PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-sky-100/80 border border-sky-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer flex items-center gap-1.5"
-              >
-                <span>{preset.label}</span>
-              </button>
-            ))}
+            {LIGHTING_PRESETS.map((preset) => {
+              const isSelected = prompt === preset.text;
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => onPromptChange(preset.text)}
+                  className={`p-2 rounded-lg text-left text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-2xs active:scale-95 border ${
+                    isSelected
+                      ? 'bg-sky-600 text-white border-sky-600 shadow-md ring-1 ring-sky-500'
+                      : 'bg-white hover:bg-sky-100/80 border-sky-200 text-stone-800'
+                  }`}
+                >
+                  <span>{preset.label}</span>
+                </button>
+              );
+            })}
           </div>
           <p className="text-[11px] text-sky-700 mt-0.5">
-            ※ ブラシ未選択の場合は画像全体の光を調整し、部分選択した場合はその場所の光を重点的に調整します。
+            ※ 対象物の選択がない場合は画像全体の光を調整し、部分選択した場合はその場所の光を重点的に調整します。
           </p>
         </div>
       )}
@@ -347,16 +338,23 @@ export const PromptControls: React.FC<PromptControlsProps> = ({
             画質向上・クッキリ鮮明化プリセット
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {ENHANCE_PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => onPromptChange(preset.text)}
-                className="p-2 bg-white hover:bg-purple-100/80 border border-purple-200 rounded-lg text-left text-xs font-bold text-stone-800 transition cursor-pointer"
-              >
-                {preset.label}
-              </button>
-            ))}
+            {ENHANCE_PRESETS.map((preset) => {
+              const isSelected = prompt === preset.text;
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => onPromptChange(preset.text)}
+                  className={`p-2 rounded-lg text-left text-xs font-bold transition cursor-pointer shadow-2xs active:scale-95 border ${
+                    isSelected
+                      ? 'bg-purple-600 text-white border-purple-600 shadow-md ring-1 ring-purple-500'
+                      : 'bg-white hover:bg-purple-100/80 border-purple-200 text-stone-800'
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}

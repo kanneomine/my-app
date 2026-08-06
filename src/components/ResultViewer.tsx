@@ -96,16 +96,20 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
         resCtx.drawImage(resImg, 0, 0, w, h);
         const resData = resCtx.getImageData(0, 0, w, h);
 
-        // Draw mask in temp canvas
+        // Draw mask in temp canvas with a slight blur to create feathering
         const tempMaskCanvas = document.createElement('canvas');
         tempMaskCanvas.width = w;
         tempMaskCanvas.height = h;
         const maskCtx = tempMaskCanvas.getContext('2d');
         if (!maskCtx) return;
+
+        // We apply a 5px gaussian blur filter on the mask canvas to smoothly feather the transition edges
+        maskCtx.filter = "blur(5px)";
         maskCtx.drawImage(maskImg, 0, 0, w, h);
         const maskData = maskCtx.getImageData(0, 0, w, h);
 
-        // Blend: Where mask is white (>30), use result pixel. Where mask is black, keep original pixel 100%.
+        // Blend: Linear alpha blending based on the blurred mask density to ensure
+        // that the edited area transitions seamlessly and beautifully into the original unedited area.
         const blended = ctx.createImageData(w, h);
         const bPix = blended.data;
         const oPix = origData.data;
@@ -113,18 +117,14 @@ export const ResultViewer: React.FC<ResultViewerProps> = ({
         const mPix = maskData.data;
 
         for (let i = 0; i < bPix.length; i += 4) {
-          const isMasked = mPix[i] > 30 || mPix[i + 1] > 30 || mPix[i + 2] > 30;
-          if (isMasked) {
-            bPix[i] = rPix[i];
-            bPix[i + 1] = rPix[i + 1];
-            bPix[i + 2] = rPix[i + 2];
-            bPix[i + 3] = rPix[i + 3];
-          } else {
-            bPix[i] = oPix[i];
-            bPix[i + 1] = oPix[i + 1];
-            bPix[i + 2] = oPix[i + 2];
-            bPix[i + 3] = oPix[i + 3];
-          }
+          // Average the RGB values of the blurred mask to calculate the blending alpha (0 to 1)
+          const maskVal = (mPix[i] + mPix[i + 1] + mPix[i + 2]) / 3;
+          const alpha = maskVal / 255;
+
+          bPix[i] = Math.round(rPix[i] * alpha + oPix[i] * (1 - alpha));
+          bPix[i + 1] = Math.round(rPix[i + 1] * alpha + oPix[i + 1] * (1 - alpha));
+          bPix[i + 2] = Math.round(rPix[i + 2] * alpha + oPix[i + 2] * (1 - alpha));
+          bPix[i + 3] = Math.round(rPix[i + 3] * alpha + oPix[i + 3] * (1 - alpha));
         }
 
         ctx.putImageData(blended, 0, 0);
